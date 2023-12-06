@@ -1,9 +1,15 @@
 import EventList from "../../components/events/event-list";
+import EventsSearch from "../../components/events/events-search";
 import { getAllEvents } from "../../dummy-data";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const AllEventsPage = () => {
   const allEvents = getAllEvents();
+  const router = useRouter();
+  const searchEvents = (year, month) => {
+    router.push(`/events/${year}/${month}`);
+  };
   return (
     <>
       <div className="m-4">
@@ -16,7 +22,10 @@ const AllEventsPage = () => {
           </button>
         </Link>
       </div>
-      <EventList items={allEvents} />
+      <div className="flex flex-col items-center justify-center">
+        <EventsSearch onSearch={searchEvents} />
+        <EventList items={allEvents} />
+      </div>
     </>
   );
 };
